@@ -1,0 +1,6 @@
+# Avoid comminting API key
+.env
+
+# Exclude all folders in dir from git
+*/*
+!.github/*
