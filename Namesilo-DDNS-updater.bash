@@ -100,14 +100,14 @@ namesilo_update() {
           ;;
         280)
           local ERROR_DETAILS=`xmllint --xpath "//namesilo/reply/detail/text()" $RESPONSE`
-          printf "IP$ip_type : There has been an error with the content of the request, see below\n'$ERROR_DETAILS'\n\n\n" >> $LOG_FILE
+          printf "IP$ip_type : $(date +"%d/%m/%y | %H:%M:%S") -There has been an error with the content of the request, see below\n'$ERROR_DETAILS'\n\n\n" >> $LOG_FILE
           ## put the old IP back, so that the update will be tried next time
           echo $KNOWN_IP > $IP_FILE
           ;;
         *)
           ## put the old IP back, so that the update will be tried next time
           echo $KNOWN_IP > $IP_FILE
-          printf "IP$ip_type : DDNS update failed code '$RESPONSE_CODE'!\n" >> $LOG_FILE
+          printf "IP$ip_type : $(date +"%d/%m/%y | %H:%M:%S") - DDNS update failed code '$RESPONSE_CODE'!\n" >> $LOG_FILE
           ;;
       esac
     done
@@ -126,7 +126,7 @@ update_line_or_add_one() {
   if [[ $LAST_IP_CHANGE_LINE =~ [0-9]{2}-[0-9]{2}-[0-9]{2} ]]; then
     ## then edit that line
     ## no other choice than a tmp file since syntax is different between Mac and Linux
-    sed -e "s/$LAST_IP_CHANGE_LINE/IP$ip_type : $(date +"%m-%d-%y | %H:%M:%S") - $message/" $LOG_FILE > $LOG_FILE.tmp
+    sed -e "s/$LAST_IP_CHANGE_LINE/IP$ip_type : $(date +"%d-%m-%y | %H:%M:%S") - $message/" $LOG_FILE > $LOG_FILE.tmp
     cat $LOG_FILE.tmp > $LOG_FILE
     rm $LOG_FILE.tmp
   else
