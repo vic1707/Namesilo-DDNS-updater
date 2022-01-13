@@ -137,6 +137,16 @@ update_line_or_add_one() {
 
 [[ $VERBOSE ]] && printf "Starting Namesilo DDNS updater : '$(date)'\n\n"
 
+## change string list separated by comma to array
+IFS=',' read -a tmp <<< "$DOMAINS";
+DOMAINS=("${tmp[@]}")
+
+## `set -f` is used to disable globbing (which replace * with filenames)
+set -f
+IFS=',' read -a tmp <<< "$HOSTS";
+set +f
+HOSTS=("${tmp[@]}")
+
 for DOMAIN in "${DOMAINS[@]}"; do
   ## create $DOMAIN directory if it doesn't exist
   [[ ! -d $DOMAIN ]] && mkdir $DOMAIN
