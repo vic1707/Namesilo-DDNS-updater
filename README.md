@@ -49,9 +49,41 @@ To run the script using Docker, you need to:
 2. Run the following command to run the docker container:
     ```
     docker run -d \
-      -v path/to/.env:/app/.env \
+      -e PUID=1000 \
+      -e PGID=1000 \
+      -e TZ=Europe/Paris \
+      -e DOMAINS="github.com,google.com" \
+      -e HOSTS="@,*" \
+      -e APIKEY='dQw4w9WgXcQ' \
+      -e IP_V4_TTL=60 \
+      -e IP_V6_TTL=60 \
+      -e UPDATE_IP_V4=true \
+      -e UPDATE_IP_V6=true \
+      -e LOG_FILE="namesilo-ddns-updater.txt" \
       -v path/to/namesilo-ddns-updater.txt:/app/namesilo-ddns-updater.txt \
       vic1707:namesilo-ddns-updater:latest
+    ```
+    or via Docker Compose:
+    ```yml
+    version: "3"
+
+    service:
+      image: vic1707/namesilo-ddns-updater:latest
+      container_name: namesilo-ddns-updater
+      environment:
+        - PUID=1000 # optional
+        - PGID=1000 # optional
+        - TZ=Europe/Paris # optional
+        - DOMAINS="github.com,google.com"
+        - HOSTS="@,*"
+        - APIKEY='dQw4w9WgXcQ'
+        - IP_V4_TTL=60
+        - IP_V6_TTL=60
+        - UPDATE_IP_V4=true
+        - UPDATE_IP_V6=true
+        - LOG_FILE=namesilo-ddns-updater.txt
+      volumes:
+        - path/to/namesilo-ddns-updater.txt:/app/namesilo-ddns-updater.txt
     ```
 
 ## Known issues:

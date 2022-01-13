@@ -14,8 +14,10 @@ done
 trap "exit 1" TERM
 TOP_PID=$$
 
-## Retreive environement variables from .env file
-source $(dirname "${BASH_SOURCE[0]}")/.env
+## Retreive environement variables from .env file if exists
+if [ -f $(dirname "${BASH_SOURCE[0]}")/.env ]; then
+  source $(dirname "${BASH_SOURCE[0]}")/.env
+fi
 
 LOG_FILE=$(dirname "${BASH_SOURCE[0]}")/$LOG_FILE
 
