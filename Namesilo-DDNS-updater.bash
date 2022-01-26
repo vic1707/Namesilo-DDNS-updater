@@ -29,7 +29,7 @@ namesilo_update() {
 
   ## Retreive current external IP
   local IP_ADDRESS=$( curl -s -${ip_type: -1} https://ifconfig.co/ip )
-  if [[ -z "$IP_ADDRESS" || "$IP_ADDRESS" == *"error"* ]] || [[ "$ip_type" == "V6" && ! "$IP_ADDRESS" =~ ":" ]]; then
+  if [[ -z "$IP_ADDRESS" || "$IP_ADDRESS" == *"error"* ]] || [[ "$ip_type" == "V6" && ! "$IP_ADDRESS" =~ ":" ]]; then
     [[ $VERBOSE ]] && printf "IP$ip_type Address can't be determined ($IP_ADDRESS)\n"
     update_line_or_add_one "Address can't be determined"
     return 1
@@ -98,7 +98,7 @@ namesilo_update() {
         300)
           ## Set update time
           date "+%s" > $IP_TIME
-          printf "IP$ip_type : Operation success. Now '$HOST_DOT$DOMAIN' IP address is '$IP_ADDRESS'\n" >> $LOG_FILE
+          printf "IP$ip_type : $(date +"%d/%m/%y | %H:%M:%S") - Operation success. Now '$HOST_DOT$DOMAIN' IP address is '$IP_ADDRESS'\n" >> $LOG_FILE
           ;;
         280)
           local ERROR_DETAILS=`xmllint --xpath "//namesilo/reply/detail/text()" $RESPONSE`
